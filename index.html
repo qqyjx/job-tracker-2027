@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>2027 秋招投递清单</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#f5f7fa;
+    --surface:#ffffff;
+    --surface-2:#fafbfd;
+    --ink:#171a2b;
+    --ink-2:#474d63;
+    --muted:#79809a;
+    --line:#e2e6ef;
+    --line-2:#eef1f7;
+    --accent:#2f4b7c;
+    --accent-soft:#e9eef7;
+    --urgent:#a93c10;
+    --urgent-soft:#fbeae2;
+    --ok:#26644a;
+    --ok-soft:#e2efe8;
+    --warn:#7d5a10;
+    --warn-soft:#f7efd9;
+    --skip-soft:#eef0f4;
+    --shadow:0 1px 2px rgba(23,26,43,.05), 0 8px 24px -12px rgba(23,26,43,.18);
+    --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0e1017;
+      --surface:#171a24;
+      --surface-2:#1c202b;
+      --ink:#e7eaf3;
+      --ink-2:#aeb5c8;
+      --muted:#7a8195;
+      --line:#282d3b;
+      --line-2:#222733;
+      --accent:#93aeda;
+      --accent-soft:#1d2534;
+      --urgent:#e5825e;
+      --urgent-soft:#2d1a13;
+      --ok:#79bf99;
+      --ok-soft:#14261e;
+      --warn:#d2af66;
+      --warn-soft:#282113;
+      --skip-soft:#20242f;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0e1017;
+    --surface:#171a24;
+    --surface-2:#1c202b;
+    --ink:#e7eaf3;
+    --ink-2:#aeb5c8;
+    --muted:#7a8195;
+    --line:#282d3b;
+    --line-2:#222733;
+    --accent:#93aeda;
+    --accent-soft:#1d2534;
+    --urgent:#e5825e;
+    --urgent-soft:#2d1a13;
+    --ok:#79bf99;
+    --ok-soft:#14261e;
+    --warn:#d2af66;
+    --warn-soft:#282113;
+    --skip-soft:#20242f;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:14px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:32px 24px 72px}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;flex-wrap:wrap;
+    padding-bottom:18px;border-bottom:2px solid var(--ink);
+  }
+  h1{
+    margin:0;font-size:27px;font-weight:600;letter-spacing:-.4px;
+    text-wrap:balance;
+  }
+  .sub{margin:5px 0 0;color:var(--muted);font-size:13px}
+  .updated{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    text-align:right;line-height:1.5;
+  }
+  .updated b{display:block;color:var(--ink-2);font-weight:500;font-size:12px}
+
+  /* ---------- summary ---------- */
+  .summary{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);
+    margin:22px 0 0;border-radius:8px;overflow:hidden;
+  }
+  .stat{background:var(--surface);padding:14px 16px}
+  .stat .n{
+    font-family:var(--mono);font-size:24px;font-weight:600;
+    line-height:1.1;font-variant-numeric:tabular-nums;
+  }
+  .stat .k{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.3px}
+  .stat.is-applied .n{color:var(--ok)}
+  .stat.is-pending .n{color:var(--accent)}
+  .stat.is-soon .n{color:var(--urgent)}
+
+  /* ---------- alerts ---------- */
+  .alerts{margin:16px 0 0;display:flex;flex-direction:column;gap:8px}
+  .alert{
+    display:flex;gap:10px;align-items:baseline;
+    padding:11px 14px;border-radius:7px;font-size:13px;
+    border-left:3px solid;
+  }
+  .alert.quota{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+  .alert.soon{background:var(--urgent-soft);border-color:var(--urgent);color:var(--urgent)}
+  .alert .tag{
+    font-family:var(--mono);font-size:10.5px;font-weight:600;
+    letter-spacing:.6px;text-transform:uppercase;flex-shrink:0;opacity:.85;
+  }
+  .alert span{color:var(--ink-2)}
+  .alert.quota span,.alert.soon span{color:inherit;opacity:.92}
+
+  /* ---------- groups ---------- */
+  .group{margin-top:34px}
+  .group-head{
+    display:flex;align-items:baseline;gap:10px;
+    padding-bottom:8px;margin-bottom:0;
+    border-bottom:1px solid var(--line);
+  }
+  .group-head h2{
+    margin:0;font-size:14.5px;font-weight:600;letter-spacing:.1px;
+  }
+  .group-head .count{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .group-head .hint{
+    margin-left:auto;font-size:12px;color:var(--muted);
+  }
+
+  .rows{display:flex;flex-direction:column}
+  .row{
+    display:grid;
+    grid-template-columns:3px minmax(0,1fr) 84px 96px 92px;
+    gap:0 14px;align-items:center;
+    padding:11px 12px 11px 0;
+    border-bottom:1px solid var(--line-2);
+    background:var(--surface);
+  }
+  .row:hover{background:var(--surface-2)}
+  .row.done{opacity:.62}
+  .row.skipped{opacity:.42}
+
+  .pri{align-self:stretch;border-radius:2px;background:transparent}
+  .pri.high{background:var(--accent)}
+  .pri.mid{background:var(--line)}
+  .pri.low{background:transparent}
+
+  .who{min-width:0;padding-left:11px}
+  .org{font-size:11.5px;color:var(--muted);letter-spacing:.15px}
+  .role{
+    font-size:14px;font-weight:500;color:var(--ink);
+    margin-top:1px;overflow-wrap:anywhere;
+  }
+  .role a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+  .role a:hover{border-color:var(--accent);color:var(--accent)}
+  .why{font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+
+  .city{font-size:12.5px;color:var(--ink-2)}
+  .due{
+    font-family:var(--mono);font-size:12px;
+    font-variant-numeric:tabular-nums;color:var(--ink-2);
+  }
+  .due .rel{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+  .due.soon{color:var(--urgent);font-weight:500}
+  .due.soon .rel{color:var(--urgent);opacity:.8}
+
+  .chip{
+    font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.3px;
+    padding:5px 0;border-radius:5px;border:1px solid transparent;
+    cursor:pointer;text-align:center;width:100%;
+    background:var(--skip-soft);color:var(--muted);
+    transition:background .12s,color .12s;
+  }
+  .chip:hover{border-color:var(--line)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .chip.pending{background:var(--accent-soft);color:var(--accent)}
+  .chip.applied{background:var(--ok-soft);color:var(--ok)}
+  .chip.opening{background:var(--warn-soft);color:var(--warn)}
+  .chip.skip{background:var(--skip-soft);color:var(--muted);text-decoration:line-through}
+
+  .foot{
+    margin-top:38px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--muted);display:flex;
+    justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .save{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .save.on{color:var(--ok)}
+  .save.err{color:var(--urgent)}
+
+  @media (max-width:720px){
+    .wrap{padding:22px 14px 56px}
+    .row{grid-template-columns:3px minmax(0,1fr) 88px;row-gap:8px}
+    .city{grid-column:2;font-size:12px}
+    .due{grid-column:3;text-align:right}
+    .chip{grid-column:3;grid-row:1}
+    .who{grid-row:1;grid-column:2}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<script id="app-state" type="application/json">
+{
+  "updated": "2026-09-08",
+  "jobs": [
+    {"g":"live","org":"东方财富证券","role":"投资者教育岗","city":"上海","due":"","pri":"high","status":"pending","why":"JD 写「传媒专业优先」「新媒体策划运营」「组织策划能力」，四项全中。表单填写中，等个人信息","url":"https://app.mokahr.com/campus_apply/eastmoney/92400?recommendCode=DSXQv5Z8#/jobs"},
+    {"g":"live","org":"东方财富证券","role":"平台运营岗","city":"上海","due":"","pri":"high","status":"pending","why":"JD 写「金融或人文社科类专业优先」「较强文字功底」","url":"https://app.mokahr.com/campus_apply/eastmoney/92400?recommendCode=DSXQv5Z8#/jobs"},
+    {"g":"live","org":"东方财富证券","role":"EASTstar-市场推广","city":"上海","due":"","pri":"mid","status":"pending","why":"管培之星项目，天花板高；要求基金投资经验","url":"https://app.mokahr.com/campus_apply/eastmoney/92400?recommendCode=DSXQv5Z8#/jobs"},
+    {"g":"live","org":"东方财富证券","role":"日常实习-营销策划实习生","city":"上海","due":"","pri":"high","status":"pending","why":"实习额度独立，不占秋招 3 次；JD 与赛事运营＋公众号经历逐条对应","url":"https://app.mokahr.com/campus_apply/eastmoney/92400?recommendCode=DSXQv5Z8#/jobs"},
+
+    {"g":"oct","org":"咪咕文化科技（中国移动）","role":"品牌传播专员（媒体推广方向）","city":"北京","due":"2026-10-09","pri":"high","status":"pending","why":"全场最匹配。JD 要「公众号运营、品牌文案、营销策划实习经历优先」，专业含艺术学-戏剧与影视","url":"https://job.10086.cn/personal/job/detail.html?id=cececa2a-f79b-4212-a0fd-451852078fe0"},
+    {"g":"oct","org":"咪咕公司（中国移动）","role":"营销策划专员（上海）","city":"上海","due":"2026-10-09","pri":"high","status":"pending","why":"专业含艺术学-戏剧与影视；广告策划、客户对接、方案撰写","url":"https://job.10086.cn/personal/job/detail.html?id=f82fdd9c-dcea-4746-bcc5-c9223df28dbe"},
+    {"g":"oct","org":"麒麟软件（中国电子）","role":"营销岗-HZ-XZ","city":"杭州","due":"2026-10-23","pri":"high","status":"pending","why":"JD 要「普通话标准、临场表达与讲解能力优秀」「政企接待、展厅讲解经验优先」——普通话一级乙等＋播音＋外事接待","url":"https://campus.cec.com.cn/positionDetail?id=839965399322018"},
+    {"g":"oct","org":"中信出版集团","role":"少儿出版数字内容策划","city":"北京","due":"","pri":"high","status":"pending","why":"专业含「编剧、导演」；青少年内容对应美育课程设计与教学成果奖项","url":"https://job.citic.com/recruit#/portal_job_detail?id=_HB4_NDg5MA%253D%253D"},
+    {"g":"oct","org":"中国国新控股 / 中文发集团","role":"管理培训生","city":"北京","due":"","pri":"mid","status":"pending","why":"硕士专业目录含艺术学-艺术学、文学-艺术学；央企轮岗培养","url":"https://zp.crhc.cn/recportal/recruit_02?title=recruit_02&recruitType=02&isCanDelete=0"},
+    {"g":"oct","org":"咪咕数字传媒（中国移动）","role":"渠道运营专员（短剧渠道推广）","city":"杭州","due":"2026-10-09","pri":"mid","status":"pending","why":"专业含艺术学-戏剧与影视，但偏商务谈判、合同签约与投流数据","url":"https://job.10086.cn/personal/job/detail.html?id=ea908bf0-3d2b-411d-8e97-fdb54f4daf49"},
+    {"g":"oct","org":"中信出版集团","role":"AI视频编导","city":"北京","due":"","pri":"low","status":"pending","why":"要求短视频编导实操与平台流量规则，需剪辑实操经验","url":"https://job.citic.com/recruit#/portal_job_detail?id=_HB4_NDg4Mg%253D%253D"},
+    {"g":"oct","org":"中信出版集团","role":"少儿出版视频编导","city":"北京","due":"","pri":"low","status":"skip","why":"硬要求剪映／PR 剪辑实战经验与个人代表作品","url":"https://job.citic.com/recruit#/portal_job_detail?id=_HB4_NDg4OQ%253D%253D"},
+
+    {"g":"soon","org":"中共上海市委组织部","role":"上海市定向选调生（综合类）","city":"上海","due":"","pri":"high","status":"opening","why":"最紧急。上届 9/8 发公告、9/9 开始报名，窗口仅 15 天且不补报。综合类不限专业、不限生源，非沪生源录用后可落户。政治面貌三选一，非党员可用「校院系团委部长／副部长满一年」顶替，需备任职证明","url":"http://xds.scc.pku.edu.cn/"},
+    {"g":"soon","org":"中共北京市委组织部","role":"北京定向选调 + 优培计划","city":"北京","due":"","pri":"high","status":"opening","why":"上届 9/12 发公告、9/22 报名，窗口 5 天。北大属京内高校，条件三选一。「优培计划」401 个市属企事业岗，含文化系统，与艺术学专业对口。需确认「校级优秀团干部」能否认定为公告要求的「校级优秀学生干部」","url":"https://rsj.beijing.gov.cn/xxgk/tzgg/"},
+    {"g":"soon","org":"北京人民艺术剧院","role":"应届毕业生公开招聘（艺术生产统筹方向）","city":"北京","due":"","pri":"high","status":"opening","why":"唯一秋季招次年应届的对口院团。上届 9/25 发布，预计 2026 年 9 月下旬开。往期岗位含艺术生产统筹、剧本编辑、综合文秘——幕后统筹岗，属幕后统筹方向","url":"https://rsj.beijing.gov.cn/xxgk/gkzp/"},
+    {"g":"soon","org":"北京中海地产","role":"新媒体运营","city":"北京","due":"2026-11-10","pri":"mid","status":"opening","why":"专业「艺术学全类」；新媒体＋直播运营。2026-09-11 才开放报名","url":"https://www.iguopin.com/job/detail?id=217180899186312161"},
+
+    {"g":"spring","org":"中央广播电视总台","role":"年度公开招聘","city":"北京","due":"","pri":"mid","status":"opening","why":"上届 2025-12-30 发布，预计 2026 年 12 月底开——少数能赶上的秋冬招","url":"https://www.cctv.com/"},
+    {"g":"spring","org":"中国歌剧舞剧院","role":"剧目创作部 戏剧导演 / 舞台监督","city":"北京","due":"","pri":"high","status":"opening","why":"幕后统筹岗，对应导演助理与剧目制作方向。优先于同院的声乐演员岗。预计 2027 年 4 月","url":"https://www.cnoddt.cn/"},
+    {"g":"spring","org":"中国对外文化集团","role":"新事业发展部 项目经理","city":"北京","due":"","pri":"high","status":"opening","why":"JD 白纸黑字接受「艺术学」硕士，且看重英文能力（雅思 6.5）。管理岗，预计 2027 年 4 月","url":"https://www.caeg.cn/about/zrwm/index.html"},
+    {"g":"spring","org":"国家大剧院","role":"年度公开招聘","city":"北京","due":"","pri":"mid","status":"opening","why":"一年两批，硕士及以上。2026 年批次要求毕业 2 年内，2027 届需等 2027 年 4 月那批","url":"http://www.chncpa.org"},
+    {"g":"spring","org":"上海歌剧院","role":"季度公开招聘","city":"上海","due":"","pri":"mid","status":"opening","why":"季度滚动，全年多次机会，是春季前唯一可能提前出现的窗口。应以应届生身份投递以规避居住证满一年要求","url":"https://rsj.sh.gov.cn/tzpgg_17408/index.html"},
+    {"g":"spring","org":"中国东方演艺集团","role":"声乐演员 / 音乐剧演员","city":"北京","due":"","pri":"low","status":"opening","why":"台前演员岗，优先级低于幕后统筹岗。另有身高门槛，需核对公告","url":"http://www.dfyanyi.com"},
+    {"g":"spring","org":"中国交响乐团","role":"合唱团演员","city":"北京","due":"","pri":"low","status":"opening","why":"台前演员岗，优先级低于幕后统筹岗","url":"https://www.cnso.com.cn/"},
+
+    {"g":"exam","org":"国家公务员局","role":"2027 年度国考","city":"全国","due":"","pri":"high","status":"opening","why":"上届 10/14 发公告、10/15 报名、11/30 笔试。不要求党员。艺术学可报岗少，主战场是「不限专业」应届综合岗，辅以文旅部、总台、文联系统的文宣岗","url":"http://bm.scs.gov.cn/"},
+    {"g":"exam","org":"北京市人社局","role":"北京市考（应届职位）","city":"北京","due":"","pri":"high","status":"opening","why":"京考门槛最低的一条：北大属「北京地区高校」，非京生源可直接报，无需额外荣誉条件。上届 11 月中旬报名、12/7 笔试","url":"http://rsj.beijing.gov.cn/bm/ztzl/gwy/"},
+    {"g":"exam","org":"上海市人社局","role":"上海市考","city":"上海","due":"","pri":"mid","status":"opening","why":"上届 11 月初报名、12/7 笔试。区级及以下机关主要招应届生","url":"https://www.rsj.sh.gov.cn/"},
+    {"g":"exam","org":"广东省人社厅","role":"广东省考","city":"广州","due":"","pri":"mid","status":"opening","why":"规模最大（上届 11779 人）。非粤户籍需本科以上并有学士学位。上届 10 月下旬报名、12/7 笔试","url":"https://ggfw.hrss.gd.gov.cn/gwyks/index.do"},
+    {"g":"exam","org":"中国文联","role":"所属事业单位（应届批次）","city":"北京","due":"","pri":"high","status":"opening","why":"专业目录直接含「戏剧、戏曲、影视学」，不要求党员。含戏剧艺术中心、电视艺术中心、中国艺术报社等。上届应届批次在 1 月上中旬，比其他路径早","url":"http://zp.cflac.org.cn"},
+    {"g":"exam","org":"文化和旅游部","role":"直属院团应届招聘（9 家）","city":"北京","due":"","pri":"high","status":"opening","why":"不卡党员、不卡生源、专业完全对口。含中国歌剧舞剧院、国家京剧院、中国国家话剧院等。优先报戏剧导演、舞台监督等幕后岗。往年 3—6 月多批滚动","url":"https://www.mct.gov.cn/"},
+    {"g":"exam","org":"共青团中央","role":"所属单位招聘","city":"北京","due":"","pri":"mid","status":"opening","why":"含中国青年报社、中国青年出版总社、中央团校等，不要求党员。团干部与宣传委员履历契合。上届截至 1 月 9 日","url":"https://www.gqt.org.cn/"},
+    {"g":"exam","org":"北京市海淀区教委等","role":"中学音乐教师","city":"北京","due":"","pri":"mid","status":"opening","why":"持高中音乐教师资格证可报，不卡党员。非京生源需符合北京引进毕业生政策。各区全年滚动多批，丰台已把应届第一批提前到毕业前一年 9 月","url":"https://www.hdjwrc.cn/"},
+
+    {"g":"net","org":"泡泡玛特","role":"创意与内容 / 客户体验","city":"北京·上海","due":"2026-10-06","pri":"high","status":"pending","why":"今天开放，只有 4 周窗口，限投 2 个岗位。「创意与内容」直接对应公众号采编与文案；IP 潮玩与活动策划统筹同频","url":"https://popmart.zhiye.com/campus"},
+    {"g":"net","org":"哔哩哔哩","role":"内容运营 / 品牌市场","city":"上海","due":"2026-10-03","pri":"high","status":"pending","why":"上海总部，专业不限。唯一同时具备内容运营线和品牌市场线的大厂，公众号内容采编即该岗核心工作","url":"https://jobs.bilibili.com"},
+    {"g":"net","org":"腾讯","role":"公共事务","city":"北京","due":"2026-09-30","pri":"mid","status":"pending","why":"对应舆情工具（新榜／微博／百度云搜）与公众表达能力。截止日按岗位批次走，以 join.qq.com 岗位页为准","url":"https://join.qq.com"},
+    {"g":"net","org":"蓝色光标","role":"校招（文案 / 客户执行 / 项目管理）","city":"北京","due":"","pri":"high","status":"pending","why":"文案＋活动统筹＋舆情监测正是公关公司 AE／文案岗画像。历史节奏 9 月下旬开、10 月上旬截，具体截止未核实","url":"https://bluefocus.jobs.feishu.cn/066083"},
+    {"g":"net","org":"小红书","role":"内容运营 / 公共关系 / HRBP 培训生","city":"上海","due":"","pri":"high","status":"pending","why":"上海总部，内容运营＋PR 双线，社区调性契合公众号经验。网申已开，招满即止","url":"https://job.xiaohongshu.com/campus"},
+    {"g":"net","org":"字节跳动","role":"内容策略运营 - 番茄小说","city":"北京","due":"","pri":"high","status":"pending","why":"纯内容策划，不要求编程与剪辑。截止日说法冲突（10-30 / 招满即止），以官网为准","url":"https://jobs.bytedance.com/campus"},
+    {"g":"net","org":"字节跳动","role":"品牌创意传播 - 抖音生活服务","city":"北京·上海","due":"","pri":"high","status":"pending","why":"品牌传播对应赛事宣传推广与文案经历","url":"https://jobs.bytedance.com/campus"},
+    {"g":"net","org":"中信出版「璞玉计划」","role":"新媒体项目运营 / 中信书院内容运营","city":"北京","due":"","pri":"high","status":"pending","why":"上届 JD 明确要求硕士＋写作能力＋内容创作经验，逐条对应。2027 届据称已启动、9/30 截止但原文未核实——建议直接发邮件 recruit@citicpub.com 索取岗位表","url":"https://www.citicpub.com/"},
+    {"g":"net","org":"上海迪士尼度假区","role":"Disney Auditions 甄选（声乐／演员）","city":"上海","due":"","pri":"high","status":"pending","why":"歌剧与声乐科班背景的独家通道，且在上海。另有运营类实习生项目招 2027 届在校生、专业不限","url":"https://chinajobs.disneycareers.cn"},
+    {"g":"net","org":"美团","role":"运营类 / 市场营销类","city":"上海","due":"2026-10-31","pri":"mid","status":"pending","why":"限报 3 个志愿且顺序不可改，建议 运营类＞市场营销类＞职能类","url":"https://zhaopin.meituan.com"},
+    {"g":"net","org":"京东","role":"运营（客户体验）／ 市场与商务","city":"上海","due":"2026-11-30","pri":"mid","status":"pending","why":"今年首次引入 AI 面试","url":"https://campus.jd.com"},
+    {"g":"net","org":"快手","role":"运营类 / 市场类","city":"上海","due":"","pri":"mid","status":"pending","why":"留用实习满 40 天可转正考核，是积累大厂经验最实际的路径。招满即止","url":"https://campus.kuaishou.cn"},
+    {"g":"net","org":"拼多多","role":"运营 / 市场","city":"上海","due":"2027-01-31","pri":"mid","status":"pending","why":"窗口长，可作为后手","url":"https://careers.pddglobalhr.com/campus"},
+    {"g":"net","org":"中国广核集团","role":"职能类岗位","city":"北京·深圳","due":"","pri":"mid","status":"pending","why":"2027 届秋招已启动。央企「职能类」通常对应党群／人力／行政／宣传序列。专业要求需登录后台才能看，需登录核实","url":"https://cgnpc.iguopin.com/jobCampus"},
+    {"g":"net","org":"同方股份（中核集团）","role":"文化品牌岗 J30166","city":"北京","due":"","pri":"mid","status":"pending","why":"专业目录明确写「传播、营销、设计、艺术等专业优先」，27 届硕士，职责为文化品牌活动策划、企业文化手册与宣传品、展厅建设、品牌故事撰写——高度对口。但公告第 5 条要求中共党员，转预备党员后才能投","url":"https://cnnc.zhiye.com/custom/campus?hideMenu=1"},
+    {"g":"net","org":"中核二三建设","role":"新闻宣传见习生 J30307","city":"待定","due":"","pri":"low","status":"pending","why":"专业不限、不卡党员，该单位有对口实习经历者更有优势。但工作地点写「全国」，很可能派驻工程项目现场；且属见习生序列，投前需致电确认是否等同正式校招","url":"https://cnnc.zhiye.com/custom/campus?hideMenu=1"},
+
+    {"g":"soe","org":"上海电气集团","role":"党群干事（27届校招）","city":"上海","due":"2026-09-29","pri":"high","status":"pending","why":"职能类岗位，上海本地，党群方向正对口活动组织与文字功底。截止日来自第三方摘要未经官网核实，务必登录 sec.hotjob.cn 确认完整任职要求（该站详情页为 canvas 渲染，需人工查看）","url":"https://sec.hotjob.cn/"},
+    {"g":"soe","org":"上海电气集团","role":"行政专员（27届校招）","city":"上海","due":"2026-09-29","pri":"high","status":"pending","why":"职能类岗位，直接对口行政与综合管理。同上需登录核实专业门槛","url":"https://sec.hotjob.cn/"},
+    {"g":"soe","org":"上海电气集团","role":"管理培训生（27届校招）","city":"上海","due":"2026-09-29","pri":"mid","status":"pending","why":"轮岗多职能部门，可能含人力／行政／品牌宣传；但竞争激烈且专业倾向未知，需先核实","url":"https://sec.hotjob.cn/"},
+    {"g":"soe","org":"中国电信（上海公司／北京公司）","role":"综合支撑类（行政文秘 / 人力资源管理）","city":"上海·北京","due":"","pri":"high","status":"pending","why":"2027 届网申 8/24 已开。官网原文九大类中「综合支撑（行政文秘、法律、财务审计、人力资源管理等）」正对口，上海与北京公司均在 53 家招聘单位名单内。各分公司截止日不同，需按地点＋类别筛选查看","url":"https://job.chinatelecom.com.cn/wt/TELE/web/index"},
+    {"g":"soe","org":"中国联通","role":"新苗计划 2027 校招","city":"上海·北京","due":"","pri":"mid","status":"pending","why":"8 月底已启动，全国 2699 个岗位。需在系统内按地点筛选上海／北京，再找职能与宣传类岗位","url":"https://zglt.zhaopin.com"},
+    {"g":"soe","org":"申能集团","role":"2027 届校园招聘","city":"上海","due":"","pri":"mid","status":"pending","why":"上海市国资委 2026-09-08 发布启动公告，即今天。但公告正文是图片，岗位详情读不到——需关注「申能招聘」公众号获取职位列表","url":"https://www.gzw.sh.gov.cn/shgzw_xxgk_cqzp/"},
+    {"g":"soe","org":"上海报业集团","role":"采编 / 新媒体运营（待发布）","city":"上海","due":"","pri":"high","status":"opening","why":"官方招聘系统当前职位列表为空，尚未发布 2027 届岗位。与背景高度相关，建议每周复查","url":"https://career.sumg.com.cn/"},
+    {"g":"soe","org":"上海文化广播影视集团 SMG","role":"待发布","city":"上海","due":"","pri":"high","status":"opening","why":"官网无招聘入口，不办集团统一校招，按子公司（东方卫视、上海广播电视台等）分别发布。唯一一手渠道是「SMG招聘」公众号","url":"https://www.smg.cn/"},
+    {"g":"soe","org":"中国人寿 寿险上海分公司","role":"综合管理岗","city":"上海","due":"","pri":"high","status":"pending","why":"原文未设专业限制。职责含落实党的宣传、党建工作、会议筹备与会务保障、起草审核文稿，「有党务、行政、综合文秘实习经历者优先」——与券商行政助理的会务纪要经历逐条对应。今日发布，滚动招聘","url":"https://chinalife.zhiye.com/custom/campus?hideMenu=1"},
+    {"g":"soe","org":"中国人寿保险（集团）","role":"管培生（党群工作部）","city":"北京","due":"","pri":"mid","status":"pending","why":"集团总部管培生，专业写「哲学、历史学、文学、经济学、管理学等相关专业」，艺术学能否被「等」覆盖需向招聘方确认。另需大学英语六级或同等水平——雅思6.5是否认可要问清","url":"https://chinalife.zhiye.com/custom/campus?hideMenu=1"},
+    {"g":"soe","org":"中国人寿 寿险广东分公司","role":"鑫翎计划管培生（省本部-综合行政类）","city":"广州","due":"","pri":"mid","status":"pending","why":"未设专业限制，明确写「新闻采编、党务宣传、大型会务组织相关实践经历者优先」——与公众号采编、活动策划统筹几乎逐条对应。地点广州，在接受范围内但非优先","url":"https://chinalife.zhiye.com/custom/campus?hideMenu=1"},
+    {"g":"soe","org":"中国人保 PICC","role":"综合类岗位（2027届校招）","city":"待筛选","due":"","pri":"mid","status":"pending","why":"2027 届校招进行中，综合类在招 1922 个岗位。站内搜索功能失效，需登录后自行按城市与关键词（行政、人力、宣传）筛选上海／北京岗位","url":"https://picc.zhiye.com/custom/campus?c1=8&hideAll=true"}
+  ]
+}
+</script>
+
+<div class="wrap">
+  <header class="masthead">
+    <div>
+      <h1>2027 届秋招投递清单</h1>
+      <p class="sub">艺术学硕士 · 北京／上海／广州／深圳／南京／杭州</p>
+    </div>
+    <div class="updated">
+      <b id="today"></b>
+      清单更新于 <span id="updated"></span>
+    </div>
+  </header>
+
+  <section class="summary" id="summary"></section>
+  <section class="alerts" id="alerts"></section>
+  <main id="groups"></main>
+
+  <footer class="foot">
+    <span>点击右侧状态可切换：待投 → 已投 → 不投。改动保存在你自己的浏览器里，换设备不会同步。</span>
+    <span class="save" id="save">状态保存在本机</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var GROUPS = [
+    {id:"live",   title:"进行中",     hint:"东才计划正式岗全程限投 3 次，实习岗额度独立"},
+    {id:"oct",    title:"开放投递",   hint:"10 月陆续截止，按截止日先后处理"},
+    {id:"net",    title:"互联网与文娱", hint:"多数招满即止，别等截止日；4A 与公关公司无秋招，走实习转正"},
+    {id:"soe",    title:"央国企职能岗", hint:"党群、行政、宣传、人力这类岗位专业目录常写「艺术学」或不限，竞争小于业务岗"},
+    {id:"soon",   title:"即将开放",   hint:"盯公告发布，报名窗口只有 5—15 天且不补报"},
+    {id:"exam",   title:"考试路径",   hint:"选调、国考、省考、事业单位——需提前备考，12 月上旬三地省考笔试撞车"},
+    {id:"spring", title:"明年春季",   hint:"文艺院团按事业单位节奏走，主战场在 2027 年 3—5 月"}
+  ];
+  var CYCLE = {pending:"applied", applied:"skip", skip:"pending", opening:"applied"};
+  var LABEL = {pending:"待投", applied:"已投", skip:"不投", opening:"待开放"};
+
+  var stateEl = document.getElementById("app-state");
+  var state = JSON.parse(stateEl.textContent);
+
+  function daysTo(d){
+    if(!d) return null;
+    var t = new Date(d + "T23:59:59");
+    if(isNaN(t)) return null;
+    return Math.ceil((t - new Date()) / 86400000);
+  }
+
+  function render(){
+    var jobs = state.jobs;
+
+    // ---- summary ----
+    var applied = jobs.filter(function(j){return j.status==="applied";}).length;
+    var pending = jobs.filter(function(j){return j.status==="pending";}).length;
+    var opening = jobs.filter(function(j){return j.status==="opening";}).length;
+    var soon = jobs.filter(function(j){
+      var d = daysTo(j.due);
+      return j.status!=="applied" && j.status!=="skip" && d!==null && d>=0 && d<=14;
+    }).length;
+
+    document.getElementById("summary").innerHTML =
+      stat(applied,"已投递","is-applied") +
+      stat(pending,"待投递","is-pending") +
+      stat(opening,"待开放","") +
+      stat(soon,"14 天内截止","is-soon") +
+      stat(jobs.length,"清单总数","");
+
+    // ---- alerts ----
+    var alerts = [];
+    var emAppliedCount = jobs.filter(function(j){
+      return j.org.indexOf("东方财富")===0 && j.status==="applied" && j.role.indexOf("实习")<0;
+    }).length;
+    alerts.push('<div class="alert quota"><span class="tag">限投</span>' +
+      '<span>东方财富东才计划正式岗全程只能投 <b>3</b> 个，当前已投 <b>' + emAppliedCount +
+      '</b>／3。实习岗额度独立，不占用。</span></div>');
+
+    var urgent = jobs.filter(function(j){
+      var d = daysTo(j.due);
+      return j.status!=="applied" && j.status!=="skip" && d!==null && d>=0 && d<=30;
+    }).sort(function(a,b){return daysTo(a.due)-daysTo(b.due);});
+    if(urgent.length){
+      var u = urgent[0];
+      alerts.push('<div class="alert soon"><span class="tag">最近截止</span>' +
+        '<span>' + esc(u.org) + ' <b>' + esc(u.role) + '</b> 还有 <b>' + daysTo(u.due) +
+        '</b> 天（' + u.due + '）。30 天内共 ' + urgent.length + ' 个待处理。</span></div>');
+    }
+    document.getElementById("alerts").innerHTML = alerts.join("");
+
+    // ---- groups ----
+    var html = "";
+    GROUPS.forEach(function(g){
+      var list = jobs.filter(function(j){return j.g===g.id;});
+      if(!list.length) return;
+      var pri = {high:0, mid:1, low:2};
+      list.sort(function(a,b){
+        var da = daysTo(a.due), db = daysTo(b.due);
+        if(da!==null && db!==null && da!==db) return da-db;
+        if(da!==null && db===null) return -1;
+        if(da===null && db!==null) return 1;
+        return pri[a.pri]-pri[b.pri];
+      });
+      html += '<section class="group"><div class="group-head">' +
+        '<h2>' + g.title + '</h2><span class="count">' + list.length + ' 个</span>' +
+        '<span class="hint">' + g.hint + '</span></div><div class="rows">' +
+        list.map(row).join("") + '</div></section>';
+    });
+    document.getElementById("groups").innerHTML = html;
+
+    document.getElementById("updated").textContent = state.updated;
+    var now = new Date();
+    document.getElementById("today").textContent =
+      now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate());
+  }
+
+  function stat(n,k,cls){
+    return '<div class="stat ' + cls + '"><div class="n">' + n + '</div><div class="k">' + k + '</div></div>';
+  }
+
+  function row(j){
+    var i = state.jobs.indexOf(j);
+    var d = daysTo(j.due);
+    var isSoon = d!==null && d>=0 && d<=14 && j.status!=="applied" && j.status!=="skip";
+    var dueHtml = j.due
+      ? '<div class="due' + (isSoon?" soon":"") + '">' + j.due +
+        '<span class="rel">' + (d<0 ? "已过期" : "剩 " + d + " 天") + '</span></div>'
+      : '<div class="due">—<span class="rel">待定</span></div>';
+    var roleHtml = j.url
+      ? '<a href="' + esc(j.url) + '" target="_blank" rel="noopener">' + esc(j.role) + '</a>'
+      : esc(j.role);
+    return '<div class="row ' + (j.status==="applied"?"done":"") + (j.status==="skip"?"skipped":"") + '">' +
+      '<div class="pri ' + j.pri + '"></div>' +
+      '<div class="who"><div class="org">' + esc(j.org) + '</div>' +
+      '<div class="role">' + roleHtml + '</div>' +
+      '<div class="why">' + esc(j.why) + '</div></div>' +
+      '<div class="city">' + esc(j.city) + '</div>' +
+      dueHtml +
+      '<button class="chip ' + j.status + '" data-i="' + i + '">' + LABEL[j.status] + '</button>' +
+      '</div>';
+  }
+
+  function pad(n){return n<10?"0"+n:""+n;}
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];
+    });
+  }
+
+  // ---- interaction ----
+  document.getElementById("groups").addEventListener("click", function(e){
+    var btn = e.target.closest(".chip");
+    if(!btn) return;
+    var j = state.jobs[+btn.dataset.i];
+    j.status = CYCLE[j.status] || "pending";
+    var now = new Date();
+    state.updated = now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate());
+    render();
+    save();
+  });
+
+  // ---- persistence (localStorage: per-browser, not shared) ----
+  var KEY = "job-tracker-2027";
+  var saveEl = document.getElementById("save");
+
+  try{
+    var cached = localStorage.getItem(KEY);
+    if(cached){
+      var parsed = JSON.parse(cached);
+      if(parsed && Array.isArray(parsed.jobs) && parsed.jobs.length === state.jobs.length){
+        state.jobs.forEach(function(j, idx){
+          var was = parsed.jobs[idx];
+          if(was && was.role === j.role && was.status) j.status = was.status;
+        });
+        state.updated = parsed.updated || state.updated;
+      }
+    }
+  }catch(e){ /* private mode or blocked storage: fall back to defaults */ }
+
+  function save(){
+    try{
+      localStorage.setItem(KEY, JSON.stringify(state));
+      saveEl.textContent = "已保存到本机浏览器";
+      saveEl.className = "save on";
+    }catch(e){
+      saveEl.textContent = "此浏览器不允许保存，刷新后会重置";
+      saveEl.className = "save err";
+    }
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
