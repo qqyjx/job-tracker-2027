@@ -135,6 +135,38 @@
   .alert span{color:var(--ink-2)}
   .alert.quota span,.alert.soon span{color:inherit;opacity:.92}
 
+  /* ---------- filters ---------- */
+  .filters{
+    margin:18px 0 0;padding:12px 14px;
+    background:var(--surface);border:1px solid var(--line);border-radius:8px;
+    display:flex;flex-direction:column;gap:9px;
+  }
+  .frow{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .flabel{
+    font-size:11px;color:var(--muted);letter-spacing:.4px;
+    width:34px;flex-shrink:0;
+  }
+  .fchip{
+    font-size:12.5px;padding:4px 11px;border-radius:20px;cursor:pointer;
+    border:1px solid var(--line);background:transparent;color:var(--ink-2);
+    font-family:inherit;
+  }
+  .fchip:hover{border-color:var(--accent);color:var(--accent)}
+  .fchip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .fchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  :root[data-theme="dark"] .fchip.on,
+  :root:not([data-theme="light"]) .fchip.on{color:var(--paper)}
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]) .fchip.on{color:#fff}
+  }
+  .fcount{
+    margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .empty{
+    padding:36px 16px;text-align:center;color:var(--muted);font-size:13px;
+  }
+
   /* ---------- groups ---------- */
   .group{margin-top:34px}
   .group-head{
@@ -356,6 +388,7 @@
 
   <section class="summary" id="summary"></section>
   <section class="alerts" id="alerts"></section>
+  <section class="filters" id="filters"></section>
   <main id="groups"></main>
 
   <footer class="foot">
@@ -380,6 +413,26 @@
   ];
   var CYCLE = {pending:"applied", applied:"skip", skip:"pending", opening:"applied"};
   var LABEL = {pending:"待投", applied:"已投", skip:"不投", opening:"待开放"};
+
+  var CITIES = ["北京", "上海", "广州", "深圳", "南京", "杭州"];
+  // View-only; deliberately not part of the saved state.
+  var filters = {city:"all", status:"all", soon:false};
+
+  function matchCity(j){
+    if(filters.city === "all") return true;
+    // "六城均有" / "全国" style entries apply to every city
+    if(/六城|全国|各地|待筛选|待定/.test(j.city)) return true;
+    return j.city.indexOf(filters.city) !== -1;
+  }
+  function matchStatus(j){
+    return filters.status === "all" || j.status === filters.status;
+  }
+  function matchSoon(j){
+    if(!filters.soon) return true;
+    var d = daysTo(j.due);
+    return d !== null && d >= 0 && d <= 30;
+  }
+  function visible(j){ return matchCity(j) && matchStatus(j) && matchSoon(j); }
 
   var stateEl = document.getElementById("app-state");
   var state = JSON.parse(stateEl.textContent);
@@ -431,10 +484,27 @@
     }
     document.getElementById("alerts").innerHTML = alerts.join("");
 
+    // ---- filter bar ----
+    var shown = jobs.filter(visible).length;
+    var fh = '<div class="frow"><span class="flabel">城市</span>' +
+      fchip("city", "all", "全部");
+    CITIES.forEach(function(c){ fh += fchip("city", c, c); });
+    fh += '<span class="fcount">显示 ' + shown + ' / ' + jobs.length + '</span></div>';
+
+    fh += '<div class="frow"><span class="flabel">状态</span>' +
+      fchip("status", "all", "全部") +
+      fchip("status", "pending", "待投") +
+      fchip("status", "applied", "已投") +
+      fchip("status", "opening", "待开放") +
+      fchip("status", "skip", "不投") +
+      '<button class="fchip' + (filters.soon ? " on" : "") +
+      '" data-f="soon" data-v="toggle">30 天内截止</button></div>';
+    document.getElementById("filters").innerHTML = fh;
+
     // ---- groups ----
     var html = "";
     GROUPS.forEach(function(g){
-      var list = jobs.filter(function(j){return j.g===g.id;});
+      var list = jobs.filter(function(j){return j.g===g.id && visible(j);});
       if(!list.length) return;
       var pri = {high:0, mid:1, low:2};
       list.sort(function(a,b){
@@ -449,7 +519,8 @@
         '<span class="hint">' + g.hint + '</span></div><div class="rows">' +
         list.map(row).join("") + '</div></section>';
     });
-    document.getElementById("groups").innerHTML = html;
+    document.getElementById("groups").innerHTML = html ||
+      '<div class="empty">这些条件下没有岗位。放宽城市或状态再看看。</div>';
 
     document.getElementById("updated").textContent = state.updated;
     var now = new Date();
@@ -459,6 +530,12 @@
 
   function stat(n,k,cls){
     return '<div class="stat ' + cls + '"><div class="n">' + n + '</div><div class="k">' + k + '</div></div>';
+  }
+
+  function fchip(field, value, label){
+    var on = filters[field] === value;
+    return '<button class="fchip' + (on ? " on" : "") + '" data-f="' + field +
+      '" data-v="' + esc(value) + '">' + esc(label) + '</button>';
   }
 
   function row(j){
@@ -489,6 +566,16 @@
       return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];
     });
   }
+
+  // ---- filters (view-only, never saved) ----
+  document.getElementById("filters").addEventListener("click", function(e){
+    var btn = e.target.closest(".fchip");
+    if(!btn) return;
+    var f = btn.dataset.f;
+    if(f === "soon") filters.soon = !filters.soon;
+    else filters[f] = btn.dataset.v;
+    render();
+  });
 
   // ---- interaction ----
   document.getElementById("groups").addEventListener("click", function(e){
