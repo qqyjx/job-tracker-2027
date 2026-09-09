@@ -135,6 +135,48 @@
   .alert span{color:var(--ink-2)}
   .alert.quota span,.alert.soon span{color:inherit;opacity:.92}
 
+  /* ---------- todos ---------- */
+  .todos{
+    margin:18px 0 0;border:1px solid var(--line);border-radius:8px;
+    background:var(--surface);overflow:hidden;
+  }
+  .todos-head{
+    display:flex;align-items:baseline;gap:10px;
+    padding:11px 14px;border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .todos-head h2{margin:0;font-size:13.5px;font-weight:600;letter-spacing:.2px}
+  .todos-head .done-of{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .todos-head .hint{margin-left:auto;font-size:11.5px;color:var(--muted)}
+  .todo{
+    display:grid;grid-template-columns:22px minmax(0,1fr) auto;
+    gap:0 10px;align-items:start;
+    padding:10px 14px;border-bottom:1px solid var(--line-2);
+    cursor:pointer;
+  }
+  .todo:last-child{border-bottom:0}
+  .todo:hover{background:var(--surface-2)}
+  .todo .box{
+    width:15px;height:15px;margin-top:2px;border-radius:4px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;color:#fff;line-height:1;
+  }
+  .todo.on .box{background:var(--ok);border-color:var(--ok)}
+  .todo .t{font-size:13.5px;color:var(--ink);line-height:1.5}
+  .todo .n{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5}
+  .todo .n a{color:var(--accent)}
+  .todo .when{
+    font-family:var(--mono);font-size:11px;white-space:nowrap;
+    padding:2px 7px;border-radius:4px;background:var(--accent-soft);color:var(--accent);
+  }
+  .todo .when.now{background:var(--urgent-soft);color:var(--urgent);font-weight:500}
+  .todo.on .t{text-decoration:line-through;color:var(--muted)}
+  .todo.on .n,.todo.on .when{opacity:.5}
+
   /* ---------- filters ---------- */
   .filters{
     margin:18px 0 0;padding:12px 14px;
@@ -261,6 +303,26 @@
 <script id="app-state" type="application/json">
 {
   "updated": "2026-09-08",
+  "todos": [
+    {"t":"打开广州南沙岗位表，确认 50 个岗位里有没有音乐岗","when":"今晚","done":false,
+     "n":"有的话明天 9:00 就要报名（9/9—9/15，笔试 9/17 在上海设考点，事业编，面向 2027 届）。表在 http://www.gzns.gov.cn/attachment/8/8070/8070060/10992180.xlsx"},
+    {"t":"去教务处开一份盖章的硕士课程成绩单","when":"本周","done":false,
+     "n":"硕士专业是戏剧与影视学(1303)，音乐教师岗普遍按音乐与舞蹈学(1302)设目录，公办资格审查按代码机械比对。广州优才计划公告写明「专业未列入目录的可凭盖章成绩单认定为相近专业」——至少四个城市用得上，临时办来不及"},
+    {"t":"去学工部问「校级优秀团干部」能否算「校级优秀学生干部」","when":"本周","done":false,
+     "n":"北京优培计划资格三选一，非党员且奖学金是校级三等（不满足一等及以上），唯一通道就是这一条。同时开一份校团委文体部常务副部长任职满一年的证明，上海选调要用"},
+    {"t":"核对学信网上的专业全称与代码","when":"本周","done":false,
+     "n":"是「艺术学(1301)」「戏剧与影视(1354)」还是「戏剧与影视学」？职位表按专业名称精确匹配检索，一字之差就搜不到岗位。国家艺术基金那个岗三种写法全收，但广东省艺术研究所不收音乐硕士"},
+    {"t":"发出 7 封预沟通邮件","when":"今明两天","done":false,
+     "n":"草稿在桌面投递材料文件夹的「邮件草稿」子目录，00 号文件是发送顺序。今天先发 4 封：101中学、协和青浦、深圳南山中英文、北京十一学校"},
+    {"t":"提供国泰海通实习的非亲属证明人","when":"待补","done":false,
+     "n":"原来填的证明人电话与父亲相同，而父亲正是该营业部副总经理兼合规人事——背调会认定为利益关联。换成带教同事或营业部其他负责人，给我姓名和电话后重新生成填充表"},
+    {"t":"装 Chrome 插件「简历神器」并导入填充表","when":"投递前","done":false,
+     "n":"表在桌面投递材料文件夹的「网申填充表」子目录，6 份按方向分。装好后网申表单可一键填充，身份证号那栏留空需本人填"},
+    {"t":"盯北大附中与北京十一学校的 2027 公告","when":"9/15、9/30","done":false,
+     "n":"两家往年都在这两个日子前后发布。北大附中把音乐/美术/戏剧合并成一个「艺术」岗，十一学校把音乐/舞蹈/戏剧并列——是专业代码风险最低的两家"},
+    {"t":"确认是否推进入党","when":"决策项","done":false,
+     "n":"目前是发展对象。光是被「中共党员」挡掉的对口岗已统计到 8 个以上，含中央音乐学院专职辅导员（写明需音乐专业硕士，是全场专业匹配最好的一个）。若能在 2027 年 3 月前转预备党员，选调生、央国企党群岗、高校辅导员整条线一次性打开"}
+  ],
   "jobs": [
     {"g":"edu","org":"广州市南沙区教育局","role":"2026下半年高校校园招聘 · 事业编制教师（50名）","city":"广州","due":"2026-09-15","pri":"high","status":"pending","why":"**明天就开始报名**：9/9 9:00—9/15 17:00，笔试 9/17 且**在上海设考点**。明确面向 2027 届（2027年1月1日至12月31日取得硕士学历学位），获聘为事业编内人员，不要求党员，非广州户籍可聘用后迁户。⚠️ 50 个岗位的学科明细在 xlsx 附件里，**必须先自行下载核对是否含音乐岗** ：http://www.gzns.gov.cn/attachment/8/8070/8070060/10992180.xlsx 。报名入口 qgsydw.com","url":"https://www.gzns.gov.cn/zwgk/zdlyxxgk/jyxx/content/post_10992180.html"},
     {"g":"edu","org":"北京市第一〇一中学未来科学城学校","role":"高中音乐教师","city":"北京·昌平","due":"","pri":"high","status":"pending","why":"**今天（9/8）刚发布**，未设截止。面向 2027 届，高中教师需硕士及以上，已持教资或合格证明。**非京籍可解决编制和户口**，党员只是「优先」不是门槛。投 wlkxcxx101@163.com，郭老师 16601156376。⚠️ 未来科学城在昌平属郊区，按北京引进政策郊区中小学非京生源需**工作满三年**才办落户，面试时务必问清","url":"https://www.gaoxiaojob.com/announcement/detail/429166.html"},
@@ -437,6 +499,7 @@
 
   <section class="summary" id="summary"></section>
   <section class="alerts" id="alerts"></section>
+  <section class="todos" id="todos"></section>
   <section class="filters" id="filters"></section>
   <main id="groups"></main>
 
@@ -534,6 +597,23 @@
     }
     document.getElementById("alerts").innerHTML = alerts.join("");
 
+    // ---- todos ----
+    var todos = state.todos || [];
+    var left = todos.filter(function(x){ return !x.done; }).length;
+    var URGENT = /今晚|今明|本周/;
+    var th = '<div class="todos-head"><h2>待办</h2>' +
+      '<span class="done-of">' + (todos.length - left) + ' / ' + todos.length + ' 已完成</span>' +
+      '<span class="hint">点一行标记完成</span></div>';
+    todos.forEach(function(x, i){
+      th += '<div class="todo' + (x.done ? " on" : "") + '" data-todo="' + i + '">' +
+        '<div class="box">' + (x.done ? "✓" : "") + '</div>' +
+        '<div><div class="t">' + esc(x.t) + '</div>' +
+        (x.n ? '<div class="n">' + linkify(x.n) + '</div>' : '') + '</div>' +
+        '<span class="when' + (!x.done && URGENT.test(x.when) ? " now" : "") + '">' +
+        esc(x.when) + '</span></div>';
+    });
+    document.getElementById("todos").innerHTML = th;
+
     // ---- filter bar ----
     var shown = jobs.filter(visible).length;
     var fh = '<div class="frow"><span class="flabel">城市</span>' +
@@ -582,6 +662,13 @@
     return '<div class="stat ' + cls + '"><div class="n">' + n + '</div><div class="k">' + k + '</div></div>';
   }
 
+  function linkify(t){
+    // escape first, then turn bare URLs into links
+    return esc(t).replace(/https?:\/\/[^\s，。）)]+/g, function(u){
+      return '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>';
+    });
+  }
+
   function fchip(field, value, label){
     var on = filters[field] === value;
     return '<button class="fchip' + (on ? " on" : "") + '" data-f="' + field +
@@ -611,11 +698,26 @@
   }
 
   function pad(n){return n<10?"0"+n:""+n;}
+  function stampUpdated(){
+    var now = new Date();
+    state.updated = now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate());
+  }
   function esc(s){
     return String(s).replace(/[&<>"]/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];
     });
   }
+
+  // ---- todos: part of saved state ----
+  document.getElementById("todos").addEventListener("click", function(e){
+    var row = e.target.closest(".todo");
+    if(!row) return;
+    var t = state.todos[+row.dataset.todo];
+    t.done = !t.done;
+    stampUpdated();
+    render();
+    save();
+  });
 
   // ---- filters (view-only, never saved) ----
   document.getElementById("filters").addEventListener("click", function(e){
@@ -633,8 +735,7 @@
     if(!btn) return;
     var j = state.jobs[+btn.dataset.i];
     j.status = CYCLE[j.status] || "pending";
-    var now = new Date();
-    state.updated = now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate());
+    stampUpdated();
     render();
     save();
   });
@@ -653,6 +754,12 @@
           if(was && was.role === j.role && was.status) j.status = was.status;
         });
         state.updated = parsed.updated || state.updated;
+      }
+      if(parsed && Array.isArray(parsed.todos) && Array.isArray(state.todos)){
+        state.todos.forEach(function(t){
+          var was = parsed.todos.filter(function(x){ return x.t === t.t; })[0];
+          if(was) t.done = !!was.done;
+        });
       }
     }
   }catch(e){ /* private mode or blocked storage: fall back to defaults */ }
